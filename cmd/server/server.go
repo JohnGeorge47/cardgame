@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"github.com/JohnGeorge47/cardgame/pkg/card"
-	"github.com/JohnGeorge47/cardgame/cmd"
 	"sort"
 )
 
@@ -14,8 +13,23 @@ const (
 )
 
 type Game struct {
-	players     []cmd.Player
+	players     []Player
 	currentDeck []card.Card
+}
+
+type Player struct {
+	Maxval   int
+	PlayerId uint64
+	Cards    []card.Card
+	Score    int
+}
+
+func NewPlayers(playerCount int) []Player {
+	playersArray := make([]Player, playerCount)
+	for i := 0; i < len(playersArray); i++ {
+		playersArray[i].PlayerId = uint64(i + 1)
+	}
+	return playersArray
 }
 
 //This function takes in number of cards and deals them to players
@@ -30,15 +44,15 @@ func (g *Game) DealCards(cardsToDealperPlayer int) {
 }
 
 //Creates a new instance of the game
-func NewBlackJackGame(playerCount int) *Game {
+func NewGame(playerCount int) *Game {
 	return &Game{
-		players:     cmd.NewPlayers(playerCount),
+		players:     NewPlayers(playerCount),
 		currentDeck: card.New(card.Shuffle),
 	}
 }
 
 func main() {
-	start := NewBlackJackGame(4)
+	start := NewGame(4)
 	roundno := 1
 	for len(start.currentDeck) >= 3 {
 		if roundno == 1 {
@@ -87,7 +101,7 @@ func (g *Game) logic() {
 		}
 		g.players[i].Maxval = CardValue(player.Cards[len(player.Cards)-1])
 	}
-	var victor []cmd.Player
+	var victor []Player
 	victor = append(victor,g.players[0])
 	for i := 1; i < len(g.players); i++ {
 		if g.players[i].Score > victor[len(victor)-1].Score {
@@ -107,7 +121,7 @@ func (g *Game) logic() {
 
 //This function takes a count parameter this count is basically to
 //check if there are a sequence of 3 or pairs are present
-func FindScore(player cmd.Player,count int) []card.Card {
+func FindScore(player Player,count int) []card.Card {
 	var scorearr []card.Card
 	var curr_arr []card.Card
 	curr_arr = append(curr_arr, player.Cards[0])
