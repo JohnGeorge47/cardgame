@@ -63,7 +63,7 @@ func main() {
 		for _, player := range start.players{
 			fmt.Println("Player hands ",player.PlayerId,player.Cards)
 		}
-		start.logic()
+		start.Play()
 		fmt.Println(start.players)
 		if len(start.players) == 1 {
 			fmt.Println("We have a winner Player number:", start.players[0].PlayerId)
@@ -76,7 +76,7 @@ func main() {
 //Badly named but this is the core logic of the cmd
 //It takes the cmd struct and performs the operations on top of it
 //on the players array field present in it
-func (g *Game) logic() {
+func (g *Game) Play() {
 	for i, player := range g.players {
 		//Check if they are triplets
 		scorearr:=FindScore(player,0)
