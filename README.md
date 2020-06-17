@@ -6,8 +6,8 @@ This is a simple card game with the following rules <br/>
 - If the top card has the same value, each of the tied players draws a single card from the deck until a winner is found.
 - Only the newly drawn cards are compared to decide a tie. The top card wins a tie.
 
-If you do not have go installed then in the cmd/server file theres a binary built for linux
-you can run that or you can go run cmd/server/server.go
+If you do not have go installed  theres a binary built for linux
+you can run that or you can go run game.go
 
 There are testcases written for the card deck which is in pkg/card.
 pkg/card is a pkg which can be used to shuffle cards add jokers and multiple decks
